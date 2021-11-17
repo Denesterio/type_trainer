@@ -75,7 +75,10 @@ export default {
   * @return
   * {
   *   status: 'waiting' | 'started' | 'finished',
-  *   lastCharStatus: 'right' | 'wrong', - is last typed char right
+  *   lastCharStatus: 'right' | 'wrong', - is last typed char right,
+  *   currentInput: hidden input for check user's typing,
+  *   typingErrors: count of errors for accuracy,
+  *   typingSpeed: timer, seconds passed, calculated speed
   * }
   */
   data() {
@@ -122,9 +125,15 @@ export default {
       if (!this.typingSpeed.timer) {
         this.typingSpeed.timer = setInterval(this.calculateTypingSpeed, 1000);
       }
+      // if symbol is correct
       if (this.currentText[this.currentCharIndex] === e.data) {
         this.lastCharStatus = 'right';
-        this.$emit('update:currentCharIndex', this.currentCharIndex + 1);
+        // if it's the last symbol, stop, else +1
+        if (this.currentCharIndex === this.textLength - 1) {
+          this.stopTyping();
+        } else {
+          this.$emit('update:currentCharIndex', this.currentCharIndex + 1);
+        }
       } else if (this.lastCharStatus === 'right') {
         this.lastCharStatus = 'wrong';
         this.typingErrors += 1;
@@ -168,14 +177,6 @@ export default {
 
     isCharWrong(i) {
       return this.status === 'started' && this.lastCharStatus === 'wrong' && this.currentCharIndex === i;
-    },
-  },
-
-  watch: {
-    currentCharIndex(newValue) {
-      if (newValue === this.textLength) {
-        this.stopTyping();
-      }
     },
   },
 }

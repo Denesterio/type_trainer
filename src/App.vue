@@ -39,15 +39,9 @@ export default {
         { value: '9', label: 'большой' },
       ],
       currentTextLength: '6',
-      currentText: '',
+      splittedText: [],
       currentCharIndex: 0,
     }
-  },
-
-  computed: {
-    splittedText() {
-      return this.currentText.split('');
-    },
   },
 
   created() {
@@ -61,10 +55,16 @@ export default {
         sentences: parseInt(this.currentTextLength, 10),
       };
       api.get('text', params).then((data) => {
-        this.currentText = data[0];
+        this.splittedText = data[0].split('');
       })
     },
-  }
+  },
+
+  watch: {
+    currentTextLength() {
+      this.fetchText();
+    },
+  },
 }
 </script>
 
