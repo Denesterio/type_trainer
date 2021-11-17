@@ -11,7 +11,7 @@
         :name="name"
         :value="point.value"
         :checked="modelValue === point.value"
-        @change="changeLength(e)"
+        @change="changeLength"
       >
       <label :for="`name-${i}`">{{ point.label }}</label>
     </div>
@@ -40,7 +40,7 @@ export default {
   },
 
   emits: {
-    'update:modelValue': (value) => {console.dir(value); return this.$props.points.map(p => p.value).includes(value)},
+    'update:modelValue': (value) => typeof value === 'string',
   },
 
   methods: {

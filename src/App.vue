@@ -10,19 +10,17 @@
       выбрать длину текста:
     </app-radio-inputs>
     <!-- text container -->
-    <div class="text-box bg-dark text-light rounded">
-      <div v-if="currentText.length > 0" class="p-3">{{ currentText }}</div>
-    </div>
-    <p>{{ tLength }}</p>
+    <text-box :currentText="splittedText" @refresh-text="fetchText" />
   </div>
 </template>
 
 <script>
 import AppRadioInputs from "./UI/AppRadioInputs.vue";
+import TextBox from './components/TextBox.vue';
 import api from './services/api.js';
 export default {
   name: 'App',
-  components: {AppRadioInputs},
+  components: {AppRadioInputs, TextBox},
   data() {
     return {
       textLengthSettings: [
@@ -36,9 +34,9 @@ export default {
   },
 
   computed: {
-    tLength() {
-      return this.currentText.length;
-    }
+    splittedText() {
+      return this.currentText.split('');
+    },
   },
 
   created() {
@@ -53,21 +51,8 @@ export default {
       };
       api.get('text', params).then((data) => {
         this.currentText = data[0];
-        console.dir(data[0]);
       })
     },
   }
 }
 </script>
-
-<style scoped>
-.text-box {
-  min-height: 200px;
-  line-height: 1.5;
-  padding: 1rem;
-  font-size: 1.2rem;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-</style>
