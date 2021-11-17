@@ -11,10 +11,14 @@
       </app-radio-inputs>
     </section>
     <!-- text container -->
-    <text-box :currentText="splittedText" @refresh-text="fetchText" />
+    <text-box
+      v-model:current-char-index="currentCharIndex"
+      :currentText="splittedText"
+      @refresh-text="fetchText"
+    />
     <!-- keyboard -->
     <section class="mt-4">
-      <app-keyboard></app-keyboard>
+      <app-keyboard :splittedText="splittedText" :currentIndex="currentCharIndex"></app-keyboard>
     </section>
   </div>
 </template>
@@ -36,6 +40,7 @@ export default {
       ],
       currentTextLength: '6',
       currentText: '',
+      currentCharIndex: 0,
     }
   },
 

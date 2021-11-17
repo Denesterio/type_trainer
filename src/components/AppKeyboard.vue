@@ -1,79 +1,104 @@
 <template>
   <div class="keyboard">
     <div class="keyboard-row keyboard-row-1">
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
+      <div class="keyboard-button"><small>~</small><br>`</div>
+      <div class="keyboard-button bg-success"><small>!</small><br>1</div>
+      <div class="keyboard-button bg-success"><small>@</small><br>2</div>
+      <div class="keyboard-button bg-info"><small>#</small><br>3</div>
+      <div class="keyboard-button bg-warning"><small>$</small><br>4</div>
+      <div class="keyboard-button bg-primary"><small>%</small><br>5</div>
+      <div class="keyboard-button bg-primary"><small>^</small><br>6</div>
+      <div class="keyboard-button bg-danger"><small>&</small><br>7</div>
+      <div class="keyboard-button bg-warning"><small>*</small><br>8</div>
+      <div class="keyboard-button bg-info"><small>(</small><br>9</div>
+      <div class="keyboard-button bg-success"><small>)</small><br>0</div>
+      <div class="keyboard-button bg-success"><small>_</small><br>-</div>
+      <div class="keyboard-button bg-success"><small>+</small><br>=</div>
+      <div class="keyboard-button bg-success"><small>|</small><br>\</div>
+      <div class="keyboard-button">Back</div>
     </div>
     <div class="keyboard-row keyboard-row-2">
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
+      <div class="keyboard-button">Tab</div>
+      <div class="keyboard-button bg-success">Q</div>
+      <div class="keyboard-button bg-info">W</div>
+      <div class="keyboard-button bg-warning">E</div>
+      <div class="keyboard-button bg-primary">R</div>
+      <div class="keyboard-button bg-primary">T</div>
+      <div class="keyboard-button bg-danger">Y</div>
+      <div class="keyboard-button bg-danger">U</div>
+      <div class="keyboard-button bg-warning">I</div>
+      <div class="keyboard-button bg-info">O</div>
+      <div class="keyboard-button bg-success">P</div>
+      <div class="keyboard-button bg-success"><small>{</small><br>[</div>
+      <div class="keyboard-button bg-success"><small>}</small><br>]</div>
       <div class="keyboard-button"></div>
     </div>
     <div class="keyboard-row keyboard-row-3">
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
+      <div class="keyboard-button">Caps</div>
+      <div class="keyboard-button bg-success">A</div>
+      <div class="keyboard-button bg-info">S</div>
+      <div class="keyboard-button bg-warning">D</div>
+      <div class="keyboard-button bg-primary">F</div>
+      <div class="keyboard-button bg-primary">G</div>
+      <div class="keyboard-button bg-danger">H</div>
+      <div class="keyboard-button bg-danger">J</div>
+      <div class="keyboard-button bg-warning">K</div>
+      <div class="keyboard-button bg-info">L</div>
+      <div class="keyboard-button bg-success"><small>:</small><br>;</div>
+      <div class="keyboard-button bg-success"><small>"</small><br>'</div>
+      <div class="keyboard-button">Enter</div>
     </div>
     <div class="keyboard-row keyboard-row-4">
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
+      <div class="keyboard-button">Shift</div>
+      <div class="keyboard-button bg-success">Z</div>
+      <div class="keyboard-button bg-info">X</div>
+      <div class="keyboard-button bg-warning">C</div>
+      <div class="keyboard-button bg-primary">V</div>
+      <div class="keyboard-button bg-primary">B</div>
+      <div class="keyboard-button bg-danger">N</div>
+      <div class="keyboard-button bg-danger">M</div>
+      <div class="keyboard-button bg-warning">,</div>
+      <div class="keyboard-button bg-info">.</div>
+      <div class="keyboard-button bg-success"><small>?</small><br>/</div>
+      <div class="keyboard-button">Shift</div>
     </div>
     <div class="keyboard-row keyboard-row-5">
+      <div class="keyboard-button">Ctrl</div>
       <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
-      <div class="keyboard-button"></div>
+      <div class="keyboard-button">Alt</div>
+      <div class="keyboard-button">Space</div>
+      <div class="keyboard-button">Alt</div>
+      <div class="keyboard-button d-flex align-items-center justify-content-center"><windows-icon /></div>
+      <div class="keyboard-button d-flex align-items-center justify-content-center"><context-menu-icon /></div>
+      <div class="keyboard-button">Ctrl</div>
     </div>
   </div>
 </template>
+
+<script>
+import WindowsIcon from '../icons/WindowsIcon.vue';
+import ContextMenuIcon from '../icons/ContextMenuIcon.vue';
+export default {
+  components: {WindowsIcon, ContextMenuIcon},
+  props: {
+    splittedText: {
+      type: Array,
+      required: true,
+    },
+
+    currentIndex: {
+      type: Number,
+      required: true,
+    },
+  },
+
+  computed: {
+    currentCharCode() {
+      return this.splittedText[this.currentIndex].charAtCode();
+    },
+  }
+}
+</script>
 
 <style scoped>
 .keyboard {
@@ -82,6 +107,8 @@
   grid-template-rows: repeat(5, 45px);
   gap: 2px;
   margin: 0 auto;
+  border: 5px solid #f8f9fa;
+  box-shadow: 0 0 5px #333;
 }
 .keyboard-row {
   display: grid;
@@ -104,6 +131,9 @@
 }
 .keyboard-button {
   height: 45px;
-  background-color: grey;
+  background-color: #dee2e6;
+  padding: 2px 4px;
+  line-height: 1.4;
+  font-weight: bold;
 }
 </style>

@@ -43,7 +43,7 @@
     </div>
     <!-- typing info -->
     <div class="row text-center text-primary shadow-box p-2">
-      <div class="col">{{countOfTypedChars}}/{{ textLength }}</div>
+      <div class="col">{{currentCharIndex}}/{{ textLength }}</div>
       <div class="col">Скорость: {{ typingSpeed.speed }} <small>зн/мин</small></div>
       <div class="col">Точность: {{ accuracy }}%</div>
       <div class="col">
@@ -64,7 +64,11 @@ export default {
     currentText: {
       type: Array,
       required: true,
-    }
+    },
+    currentCharIndex: {
+      type: Number,
+      required: true,
+    },
   },
 
   /***
@@ -79,7 +83,6 @@ export default {
       status: 'waiting',
       lastCharStatus: 'right',
       currentInput: '',
-      countOfTypedChars: 0,
       typingErrors: 0,
       typingSpeed: {
         timer: null,
@@ -94,10 +97,6 @@ export default {
       return this.currentText.length;
     },
 
-    activeCharIndex() {
-      return this.countOfTypedChars;
-    },
-
     accuracy() {
       return (100 - this.typingErrors / this.textLength * 100).toFixed(2);
     },
@@ -106,8 +105,8 @@ export default {
   methods: {
     calculateTypingSpeed() {
       this.typingSpeed.seconds += 1;
-      const speed = Math.round(this.countOfTypedChars * 60 / this.typingSpeed.seconds);
-      if (speed === 0 && this.countOfTypedChars > 0) {
+      const speed = Math.round(this.currentCharIndex * 60 / this.typingSpeed.seconds);
+      if (speed === 0 && this.currentCharIndex > 0) {
         this.typingSpeed.speed  = '< 1';
       } else {
         this.typingSpeed.speed = speed;
@@ -123,16 +122,12 @@ export default {
       if (!this.typingSpeed.timer) {
         this.typingSpeed.timer = setInterval(this.calculateTypingSpeed, 1000);
       }
-      if (this.currentText[this.countOfTypedChars] === e.data) {
+      if (this.currentText[this.currentCharIndex] === e.data) {
         this.lastCharStatus = 'right';
-        this.countOfTypedChars += 1;
+        this.$emit('update:currentCharIndex', this.currentCharIndex + 1);
       } else if (this.lastCharStatus === 'right') {
         this.lastCharStatus = 'wrong';
         this.typingErrors += 1;
-      }
-
-      if (this.countOfTypedChars === this.textLength) {
-        this.stopTyping();
       }
     },
 
@@ -152,7 +147,7 @@ export default {
     refreshText() {
       this.currentInput = '';
       this.status = 'waiting';
-      this.countOfTypedChars = 0;
+      this.$emit('update:currentCharIndex', 0);
       this.lastCharStatus = 'right';
       this.typingErrors = 0;
       this.typingSpeed = {
@@ -164,15 +159,23 @@ export default {
     },
 
     isCharCurrent(i) {
-      return this.status === 'started' && this.countOfTypedChars === i;
+      return this.status === 'started' && this.currentCharIndex === i;
     },
 
     isCharRight(i) {
-      return this.status === 'started' && i < this.countOfTypedChars;
+      return this.status === 'started' && i < this.currentCharIndex;
     },
 
     isCharWrong(i) {
-      return this.status === 'started' && this.lastCharStatus === 'wrong' && this.countOfTypedChars === i;
+      return this.status === 'started' && this.lastCharStatus === 'wrong' && this.currentCharIndex === i;
+    },
+  },
+
+  watch: {
+    currentCharIndex(newValue) {
+      if (newValue === this.textLength) {
+        this.stopTyping();
+      }
     },
   },
 }
