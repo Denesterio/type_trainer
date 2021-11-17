@@ -184,12 +184,12 @@ export default {
 
 <style scoped>
 .text-box {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
   min-height: 200px;
-  line-height: 1.5;
+  line-height: 1.4;
   padding: 1rem;
   position: relative;
   white-space: break-spaces;

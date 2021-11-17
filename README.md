@@ -1,5 +1,7 @@
 # type_trainer
 
+Рабочий проект на https://type-trainer.vercel.app/
+
 ## Project setup
 ```
 npm install
