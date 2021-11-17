@@ -51,7 +51,7 @@ export default {
   methods: {
     fetchText() {
       const params = {
-        type: 'hipster-centric',
+        type: 'meat-and-filler',
         sentences: parseInt(this.currentTextLength, 10),
       };
       api.get('text', params).then((data) => {

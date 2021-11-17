@@ -2,7 +2,7 @@ import fetchClient from './fetchClient.js';
 
 // build routes
 const routes = {
-  HOST: 'http://hipsum.co',
+  HOST: 'https://baconipsum.com',
   API_PATH: 'api',
   text(id = '') {
     return [this.HOST, this.API_PATH, id].join("/")
