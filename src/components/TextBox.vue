@@ -1,7 +1,7 @@
 <template>
-  <div class="text-container">
+  <section class="container">
     <!-- box with text -->
-    <div class="text-box bg-dark text-light rounded mb-3">
+    <div class="text-box mb-3">
       <!-- input for catch typing -->
       <input
         v-model="currentInput"
@@ -15,18 +15,34 @@
       <div v-if="status === 'waiting'" class="text-box-cover">
         <button @click="startTyping" class="btn btn-primary btn-lg">Начать</button>
       </div>
+      <div v-else-if="status === 'finished'" class="text-box-cover bg-light">
+        <div class="text-center p-3">
+          Вы закончили тест:
+          <br>
+          Скорость: {{ typingSpeed.speed }}
+          <br>
+          Точность: {{ accuracy }}%
+          <br>
+          <button
+            @click="refreshText"
+            class="btn btn-outline-primary"
+          >
+            Начать новый
+          </button>
+        </div>
+      </div>
       <div v-if="currentText.length > 0" class="p-3" ref="textBox">
         <span
           v-for="(char, i) in currentText"
           :key="i"
-          :class="{ 'bg-secondary': status === 'started' && countOfTypedChars === i, 'text-success': status === 'started' && i < countOfTypedChars, 'text-danger': status === 'started' && lastCharStatus === 'wrong' && countOfTypedChars === i }"
+          :class="{ 'active-char': isCharCurrent(i), 'text-success': isCharRight(i), 'text-danger': isCharWrong(i), 'bg-danger': isCharWrong(i) && char === ' ' }"
         >
           {{ char }}
         </span>
       </div>
     </div>
     <!-- typing info -->
-    <div class="row text-center text-primary">
+    <div class="row text-center text-primary shadow-box p-2">
       <div class="col">{{countOfTypedChars}}/{{ textLength }}</div>
       <div class="col">Скорость: {{ typingSpeed.speed }} <small>зн/мин</small></div>
       <div class="col">Точность: {{ accuracy }}%</div>
@@ -37,9 +53,9 @@
         >
           Обновить
         </button>
+      </div>
     </div>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -84,7 +100,7 @@ export default {
 
     accuracy() {
       return (100 - this.typingErrors / this.textLength * 100).toFixed(2);
-    }
+    },
   },
 
   methods: {
@@ -101,61 +117,92 @@ export default {
     startTyping() {
       this.status = 'started';
       this.$refs.hiddenInput.focus();
-      this.typingSpeed.timer = setInterval(this.calculateTypingSpeed, 1000);
     },
 
     handleNextChar(e) {
+      if (!this.typingSpeed.timer) {
+        this.typingSpeed.timer = setInterval(this.calculateTypingSpeed, 1000);
+      }
       if (this.currentText[this.countOfTypedChars] === e.data) {
         this.lastCharStatus = 'right';
-        this.countOfTypedChars++;
+        this.countOfTypedChars += 1;
       } else if (this.lastCharStatus === 'right') {
         this.lastCharStatus = 'wrong';
-        this.typingErrors++;
+        this.typingErrors += 1;
+      }
+
+      if (this.countOfTypedChars === this.textLength) {
+        this.stopTyping();
       }
     },
 
+    stopTyping() {
+      clearInterval(this.typingSpeed.timer);
+      this.typingSpeed.timer = null;
+      this.status = 'finished';
+    },
+
     focusOnInput(e) {
-      e.preventDefault();
       if (this.status === 'started') {
+        e.preventDefault();
         this.$refs.hiddenInput.focus();
       }
     },
 
     refreshText() {
+      this.currentInput = '';
       this.status = 'waiting';
+      this.countOfTypedChars = 0;
+      this.lastCharStatus = 'right';
+      this.typingErrors = 0;
+      this.typingSpeed = {
+        timer: null,
+        seconds: 0,
+        speed: 0,
+      };
       this.$emit('refresh-text');
+    },
+
+    isCharCurrent(i) {
+      return this.status === 'started' && this.countOfTypedChars === i;
+    },
+
+    isCharRight(i) {
+      return this.status === 'started' && i < this.countOfTypedChars;
+    },
+
+    isCharWrong(i) {
+      return this.status === 'started' && this.lastCharStatus === 'wrong' && this.countOfTypedChars === i;
     },
   },
 }
 </script>
 
 <style scoped>
-.text-container {
+.text-box {
+  font-size: 1.4rem;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  font-size: 1.2rem;
-}
-.text-box {
   min-height: 200px;
   line-height: 1.5;
   padding: 1rem;
   position: relative;
+  white-space: break-spaces;
+  letter-spacing: 1px;
+  box-shadow: inset 3px 3px 7px rgba(147, 147, 140, 0.3), 2px 2px 5px rgba(255, 255, 255, 1);
 }
 .text-box-cover {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(13, 110, 253, 0.1);
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   z-index: 999;
   position: absolute;
-}
-.text-box-cover button {
-  opacity: 0.8;
 }
 .hiddenInput {
   width: 1px;
@@ -167,5 +214,8 @@ export default {
 }
 .col {
     line-height: 38px;
+}
+.active-char{
+  background-color: rgba(0, 0, 0, 0.2);
 }
 </style>
