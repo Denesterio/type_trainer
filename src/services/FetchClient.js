@@ -1,5 +1,5 @@
 // the client realizes methods named as http methods
-export default class fetchClient {
+export default class FetchClient {
   get(url) {
     return fetch(url).then((response) => {
       if (response.ok) {

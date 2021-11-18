@@ -1,4 +1,4 @@
-import fetchClient from './fetchClient.js';
+import FetchClient from './FetchClient.js';
 
 // build routes
 const routes = {
@@ -14,7 +14,7 @@ const buildRequest = (client, type, path, params = {}) =>
   client[type](path, params);
 
 const makeRequest = (type, path, params) =>
-  buildRequest(new fetchClient(), type, path, params);
+  buildRequest(new FetchClient(), type, path, params);
 
 const makeUrl = (target, params = {}) => {
   const path = params?.id ? routes[target](params.id) : routes[target]();
