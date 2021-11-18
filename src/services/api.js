@@ -3,9 +3,9 @@ import fetchClient from './fetchClient.js';
 // build routes
 const routes = {
   HOST: 'https://baconipsum.com',
-  API_PATH: 'api',
+  API_PREFIX: 'api',
   text(id = '') {
-    return [this.HOST, this.API_PATH, id].join("/")
+    return [this.HOST, this.API_PREFIX, id].join("/")
   },
 };
 

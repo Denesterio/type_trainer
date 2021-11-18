@@ -15,7 +15,6 @@ export default {
 
   'testFinished': 'Вы закончили тест',
 
-  errors: {
-    'loadErrror': 'Не удалость загрузить текст',
-  }
+  'Failed to fetch': 'Не удалость загрузить текст',
+
 };

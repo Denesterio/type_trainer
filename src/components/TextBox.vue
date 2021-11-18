@@ -12,12 +12,17 @@
         @input="handleNextChar"
       >
       <!-- text and conditional covers -->
+      <!-- waiting cover -->
       <div v-if="status === 'waiting' || isLoading" class="text-box-cover">
-        <button @click="startTyping" class="btn btn-primary btn-lg">
+        <button
+          @click="startTyping"
+          class="btn btn-primary btn-lg"
+        >
           <app-spinner v-if="isLoading" color="light" />
           <span v-else v-t="'start'"></span>
         </button>
       </div>
+      <!-- results cover -->
       <div v-else-if="status === 'finished'" class="text-box-cover bg-light">
         <div class="text-center p-3">
           {{ $t('testFinished') }}:
@@ -33,6 +38,16 @@
           ></button>
         </div>
       </div>
+      <!-- error cover -->
+      <div v-else-if="status === 'failed'" class="text-box-cover bg-light flex-column">
+        <div class="text-danger text-center">{{ error }}</div>
+        <button
+          @click="refreshText"
+          class="btn btn-outline-primary mt-2"
+          v-t="'refresh'"
+        ></button>
+      </div>
+      <!-- text -->
       <div v-if="currentText.length > 0" class="p-3" ref="textBox">
         <span
           v-for="(char, i) in currentText"
@@ -76,7 +91,12 @@ export default {
     status: {
       type: String,
       required: true,
-    }
+    },
+    error: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
 
   components: {AppSpinner},
@@ -113,7 +133,7 @@ export default {
     },
 
     accuracy() {
-      if (this.isLoading) return 0;
+      if (this.isLoading || this.status === 'failed') return 0;
       return (100 - this.typingErrors / this.textLength * 100).toFixed(2);
     },
 

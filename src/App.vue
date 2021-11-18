@@ -14,6 +14,7 @@
     <text-box
       v-model:current-char-index="currentCharIndex"
       v-model:status="status"
+      :error="error"
       :current-text="splittedText"
       @refresh-text="fetchText"
     />
@@ -59,7 +60,7 @@ export default {
   /***
   * @return
   * {
-  *   status: 'loading'|'waiting' | 'started' | 'finished',
+  *   status: 'loading'|'failed'|'waiting'|'started'|'finished',
   *   textLengthSettings: text length radios settings [{ text: string, value: string }],
   *   currentTextLength: string - choosen length,
   *   splittedText: array of strings - text for typing, splitted to array,
@@ -81,6 +82,7 @@ export default {
       currentCharIndex: 0,
       showKeyboard: true,
       showKeyboardPrompt: true,
+      error: '',
     }
   },
 
@@ -99,10 +101,12 @@ export default {
         .get('text', params)
         .then((data) => {
           this.splittedText = data[0].split('');
-        })
-        .finally(() => {
           this.status = 'waiting';
         })
+        .catch((err) => {
+          this.status = 'failed';
+          this.error = this.$t(err.message);
+        });
     },
   },
 
