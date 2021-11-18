@@ -9,7 +9,7 @@ const routes = {
   },
 };
 
-// use partial application; it's simpler for simple task
+// use partial application; it's enough for simple task, I think
 const buildRequest = (client, type, path, params = {}) =>
   client[type](path, params);
 
@@ -29,7 +29,7 @@ const makeUrl = (target, params = {}) => {
   return url;
 }
 
-// function for each method
+// functions for each method
 const get = (target, params) => {
   const url = makeUrl(target, params);
   return makeRequest("get", url);

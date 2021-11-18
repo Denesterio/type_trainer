@@ -73,9 +73,9 @@ export default {
     return {
       status: 'loading',
       textLengthSettings: [
-        { value: '3', label: 'короткий' },
-        { value: '6', label: 'средний' },
-        { value: '9', label: 'большой' },
+        { value: '3', label: this.$t('short') },
+        { value: '6', label: this.$t('middle') },
+        { value: '9', label: this.$t('long') },
       ],
       currentTextLength: '6',
       splittedText: [],
