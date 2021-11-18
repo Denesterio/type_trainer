@@ -13,12 +13,17 @@
     <!-- text container -->
     <text-box
       v-model:current-char-index="currentCharIndex"
+      v-model:status="status"
       :currentText="splittedText"
       @refresh-text="fetchText"
     />
     <!-- keyboard -->
     <section class="mt-4">
-      <app-keyboard :splittedText="splittedText" :currentIndex="currentCharIndex"></app-keyboard>
+      <app-keyboard
+        :splittedText="splittedText"
+        :currentIndex="currentCharIndex"
+        :status="status"
+      />
     </section>
   </div>
 </template>
@@ -41,6 +46,8 @@ export default {
       currentTextLength: '6',
       splittedText: [],
       currentCharIndex: 0,
+      // 'loading'|'waiting' | 'started' | 'finished',
+      status: 'loading',
     }
   },
 
@@ -50,13 +57,19 @@ export default {
 
   methods: {
     fetchText() {
+      this.status = 'loading';
       const params = {
         type: 'meat-and-filler',
         sentences: parseInt(this.currentTextLength, 10),
       };
-      api.get('text', params).then((data) => {
-        this.splittedText = data[0].split('');
-      })
+      api
+        .get('text', params)
+        .then((data) => {
+          this.splittedText = data[0].split('');
+        })
+        .finally(() => {
+          this.status = 'waiting';
+        })
     },
   },
 

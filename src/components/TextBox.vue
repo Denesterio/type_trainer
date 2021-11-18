@@ -12,8 +12,11 @@
         @input="handleNextChar"
       >
       <!-- text -->
-      <div v-if="status === 'waiting'" class="text-box-cover">
-        <button @click="startTyping" class="btn btn-primary btn-lg">Начать</button>
+      <div v-if="status === 'waiting' || isLoading" class="text-box-cover">
+        <button @click="startTyping" class="btn btn-primary btn-lg">
+          <app-spinner v-if="isLoading" color="light" />
+          <span v-else>Начать</span>
+        </button>
       </div>
       <div v-else-if="status === 'finished'" class="text-box-cover bg-light">
         <div class="text-center p-3">
@@ -51,7 +54,8 @@
           @click="refreshText"
           class="btn btn-outline-primary"
         >
-          Обновить
+          <app-spinner v-if="isLoading" color="primary" />
+          <span v-else>Обновить</span>
         </button>
       </div>
     </div>
@@ -59,6 +63,7 @@
 </template>
 
 <script>
+import AppSpinner from '../UI/AppSpinner.vue';
 export default {
   props: {
     currentText: {
@@ -69,12 +74,17 @@ export default {
       type: Number,
       required: true,
     },
+    status: {
+      type: String,
+      required: true,
+    }
   },
+
+  components: {AppSpinner},
 
   /***
   * @return
   * {
-  *   status: 'waiting' | 'started' | 'finished',
   *   lastCharStatus: 'right' | 'wrong', - is last typed char right,
   *   currentInput: hidden input for check user's typing,
   *   typingErrors: count of errors for accuracy,
@@ -83,7 +93,6 @@ export default {
   */
   data() {
     return {
-      status: 'waiting',
       lastCharStatus: 'right',
       currentInput: '',
       typingErrors: 0,
@@ -100,8 +109,17 @@ export default {
       return this.currentText.length;
     },
 
+    lastIndex() {
+      return this.currentText.length - 1;
+    },
+
     accuracy() {
+      if (this.isLoading) return 0;
       return (100 - this.typingErrors / this.textLength * 100).toFixed(2);
+    },
+
+    isLoading() {
+      return this.status === 'loading';
     },
   },
 
@@ -117,7 +135,7 @@ export default {
     },
 
     startTyping() {
-      this.status = 'started';
+      this.$emit('update:status', 'started');
       this.$refs.hiddenInput.focus();
     },
 
@@ -129,11 +147,10 @@ export default {
       if (this.currentText[this.currentCharIndex] === e.data) {
         this.lastCharStatus = 'right';
         // if it's the last symbol, stop, else +1
-        if (this.currentCharIndex === this.textLength - 1) {
+        if (this.currentCharIndex === this.lastIndex) {
           this.stopTyping();
-        } else {
-          this.$emit('update:currentCharIndex', this.currentCharIndex + 1);
         }
+        this.$emit('update:currentCharIndex', this.currentCharIndex + 1);
       } else if (this.lastCharStatus === 'right') {
         this.lastCharStatus = 'wrong';
         this.typingErrors += 1;
@@ -143,7 +160,7 @@ export default {
     stopTyping() {
       clearInterval(this.typingSpeed.timer);
       this.typingSpeed.timer = null;
-      this.status = 'finished';
+      this.$emit('update:status', 'finished');
     },
 
     focusOnInput(e) {
@@ -155,7 +172,6 @@ export default {
 
     refreshText() {
       this.currentInput = '';
-      this.status = 'waiting';
       this.$emit('update:currentCharIndex', 0);
       this.lastCharStatus = 'right';
       this.typingErrors = 0;

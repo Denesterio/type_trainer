@@ -1,5 +1,5 @@
 <template>
-  <div ref="keyboard" class="keyboard">
+  <div ref="keyboard" class="keyboard" :class="{ 'opacity-50': status === 'loading' }">
     <div class="keyboard-row keyboard-row-1">
       <div data-code="126_96" class="keyboard-button"><small>~</small><br>`</div>
       <div data-code="49_33" class="keyboard-button bg-success"><small>!</small><br>1</div>
@@ -90,6 +90,11 @@ export default {
       type: Number,
       required: true,
     },
+
+    status: {
+      type: String,
+      required: true,
+    },
   },
 
   buttons: {},
@@ -124,9 +129,17 @@ export default {
 
   watch: {
     currentIndex(newValue, oldValue) {
-      this.removeWhiteText(oldValue);
-      this.addWhiteText(newValue);
-    }
+      if (this.status === 'started') {
+        this.removeWhiteText(oldValue);
+        this.addWhiteText(newValue);
+      }
+    },
+
+    status(newValue) {
+      if (newValue === 'started') {
+        this.addWhiteText(0);
+      }
+    },
   }
 }
 </script>
