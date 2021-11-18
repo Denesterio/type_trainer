@@ -2,25 +2,24 @@
 
 Рабочий проект на https://type-trainer.vercel.app/
 
-## Project setup
+## Для установки скопировать репозиторий
+```
+git clone https://github.com/Denesterio/type_trainer.git
+cd type_trainer
+```
+## Установить зависимости
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Запустить проект
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Зайти на локальный сервер. Номер порта будет показан в консоли, как правило, 8080: localhost:8080
 
-### Lints and fixes files
+### Можно запустить проверку линтером
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
