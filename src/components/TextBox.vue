@@ -78,6 +78,7 @@
 
 <script>
 import AppSpinner from '../UI/AppSpinner.vue';
+import HistoryService from '../services/HistoryService.js';
 export default {
   props: {
     currentText: {
@@ -179,6 +180,12 @@ export default {
     stopTyping() {
       clearInterval(this.typingSpeed.timer);
       this.typingSpeed.timer = null;
+      new HistoryService().save({
+        date: new Date(),
+        symbols: this.textLength,
+        accuracy: this.accuracy,
+        speed: this.typingSpeed.speed,
+      });
       this.$emit('update:status', 'finished');
     },
 
