@@ -15,23 +15,22 @@
       <div v-if="status === 'waiting' || isLoading" class="text-box-cover">
         <button @click="startTyping" class="btn btn-primary btn-lg">
           <app-spinner v-if="isLoading" color="light" />
-          <span v-else>Начать</span>
+          <span v-else v-t="'start'"></span>
         </button>
       </div>
       <div v-else-if="status === 'finished'" class="text-box-cover bg-light">
         <div class="text-center p-3">
-          Вы закончили тест:
+          {{ $t('testFinished') }}:
           <br>
-          Скорость: {{ typingSpeed.speed }}
+          {{ $t('speed') }}: {{ typingSpeed.speed }}
           <br>
-          Точность: {{ accuracy }}%
+          {{ $t('accuracy') }}: {{ accuracy }}%
           <br>
           <button
             @click="refreshText"
             class="btn btn-outline-primary"
-          >
-            Начать новый
-          </button>
+            v-t="'startNew'"
+          ></button>
         </div>
       </div>
       <div v-if="currentText.length > 0" class="p-3" ref="textBox">
@@ -47,15 +46,15 @@
     <!-- typing info -->
     <div class="row text-center text-primary shadow-box p-2">
       <div class="col">{{currentCharIndex}}/{{ textLength }}</div>
-      <div class="col">Скорость: {{ typingSpeed.speed }} <small>зн/мин</small></div>
-      <div class="col">Точность: {{ accuracy }}%</div>
+      <div class="col">{{ $t('speed') }}: {{ typingSpeed.speed }} <small v-t="'speedMeasuring'"></small></div>
+      <div class="col">{{ $t('accuracy') }}: {{ accuracy }}%</div>
       <div class="col">
         <button
           @click="refreshText"
           class="btn btn-outline-primary"
         >
           <app-spinner v-if="isLoading" color="primary" />
-          <span v-else>Обновить</span>
+          <span v-else v-t="'refresh'"></span>
         </button>
       </div>
     </div>

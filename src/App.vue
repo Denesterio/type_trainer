@@ -7,7 +7,7 @@
         :points="textLengthSettings"
         name="text-size"
       >
-        выбрать длину текста:
+        {{ $t('textLengthChange') }}:
       </app-radio-inputs>
     </section>
     <!-- text container -->
@@ -25,14 +25,14 @@
           id="keyboard-visibility"
           v-model="showKeyboard"
         >
-          Показать клавиатуру
+          {{ $t('showKeyboard') }}
         </app-switch-input>
         <app-switch-input
           id="prompt-visibility"
           v-model="showKeyboardPrompt"
           :disabled="!showKeyboard || status === 'started'"
         >
-          Показывать подсказки
+          {{ $t('showPrompts') }}
         </app-switch-input>
       </div>
       <!-- keyboard component -->
