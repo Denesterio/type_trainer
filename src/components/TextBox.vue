@@ -11,7 +11,7 @@
         @blur="focusOnInput"
         @input="handleNextChar"
       >
-      <!-- text -->
+      <!-- text and conditional covers -->
       <div v-if="status === 'waiting' || isLoading" class="text-box-cover">
         <button @click="startTyping" class="btn btn-primary btn-lg">
           <app-spinner v-if="isLoading" color="light" />

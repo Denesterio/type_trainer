@@ -14,15 +14,34 @@
     <text-box
       v-model:current-char-index="currentCharIndex"
       v-model:status="status"
-      :currentText="splittedText"
+      :current-text="splittedText"
       @refresh-text="fetchText"
     />
     <!-- keyboard -->
     <section class="mt-4">
+      <!-- show keyboard checkboxes -->
+      <div class="d-flex justify-content-evenly m-2 p-2">
+        <app-switch-input
+          id="keyboard-visibility"
+          v-model="showKeyboard"
+        >
+          Показать клавиатуру
+        </app-switch-input>
+        <app-switch-input
+          id="prompt-visibility"
+          v-model="showKeyboardPrompt"
+          :disabled="!showKeyboard || status === 'started'"
+        >
+          Показывать подсказки
+        </app-switch-input>
+      </div>
+      <!-- keyboard component -->
       <app-keyboard
-        :splittedText="splittedText"
-        :currentIndex="currentCharIndex"
+        v-if="showKeyboard"
+        :splitted-text="splittedText"
+        :current-index="currentCharIndex"
         :status="status"
+        :show-keyboard-prompt="showKeyboardPrompt"
       />
     </section>
   </div>
@@ -32,12 +51,26 @@
 import AppRadioInputs from "./UI/AppRadioInputs.vue";
 import TextBox from './components/TextBox.vue';
 import AppKeyboard from './components/AppKeyboard.vue';
+import AppSwitchInput from './UI/AppSwitchInput.vue';
 import api from './services/api.js';
 export default {
   name: 'App',
-  components: {AppRadioInputs, TextBox, AppKeyboard},
+  components: {AppRadioInputs, TextBox, AppKeyboard, AppSwitchInput},
+  /***
+  * @return
+  * {
+  *   status: 'loading'|'waiting' | 'started' | 'finished',
+  *   textLengthSettings: text length radios settings [{ text: string, value: string }],
+  *   currentTextLength: string - choosen length,
+  *   splittedText: array of strings - text for typing, splitted to array,
+  *   currentCharIndex: number - index of active char in array
+  *   showKeyboard: boolean,
+  *   showKeyboardPrompt: boolean - mark an active char on the keyboard
+  * }
+  */
   data() {
     return {
+      status: 'loading',
       textLengthSettings: [
         { value: '3', label: 'короткий' },
         { value: '6', label: 'средний' },
@@ -46,8 +79,8 @@ export default {
       currentTextLength: '6',
       splittedText: [],
       currentCharIndex: 0,
-      // 'loading'|'waiting' | 'started' | 'finished',
-      status: 'loading',
+      showKeyboard: true,
+      showKeyboardPrompt: true,
     }
   },
 

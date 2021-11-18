@@ -95,11 +95,17 @@ export default {
       type: String,
       required: true,
     },
+
+    showKeyboardPrompt: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
 
   buttons: {},
   // all buttons added to object with keys as their codes in ASCII
-  // [charCode]: [element, element(shiftButton)?]
+  // [charCode]: [element, element(shiftButton)?, element(shiftButton)?]
   mounted() {
     for (let row of this.$refs.keyboard.children) {
       for (let button of row.children) {
@@ -107,7 +113,7 @@ export default {
           const codes = button.getAttribute('data-code').split('_');
           this.$options.buttons[codes[0]] = [button];
           if (codes[1]) {
-            this.$options.buttons[codes[1]] = [button, this.$refs.rightShift];
+            this.$options.buttons[codes[1]] = [button, this.$refs.rightShift, this.$refs.leftShift];
           }
         }
       }
@@ -129,14 +135,14 @@ export default {
 
   watch: {
     currentIndex(newValue, oldValue) {
-      if (this.status === 'started') {
+      if (this.status === 'started' && this.showKeyboardPrompt) {
         this.removeWhiteText(oldValue);
         this.addWhiteText(newValue);
       }
     },
 
     status(newValue) {
-      if (newValue === 'started') {
+      if (newValue === 'started' && this.showKeyboardPrompt) {
         this.addWhiteText(0);
       }
     },
