@@ -1,20 +1,20 @@
 <template>
   <div ref="keyboard" class="keyboard" :class="{ 'opacity-50': status === 'loading' }">
     <div class="keyboard-row keyboard-row-1">
-      <div data-code="126_96" class="keyboard-button"><small>~</small><br>`</div>
-      <div data-code="49_33" class="keyboard-button bg-success"><small>!</small><br>1</div>
-      <div data-code="50_64" class="keyboard-button bg-success"><small>@</small><br>2</div>
-      <div data-code="51_35" class="keyboard-button bg-info"><small>#</small><br>3</div>
-      <div data-code="52_36" class="keyboard-button bg-warning"><small>$</small><br>4</div>
-      <div data-code="53_37" class="keyboard-button bg-primary"><small>%</small><br>5</div>
-      <div data-code="54_64" class="keyboard-button bg-primary"><small>^</small><br>6</div>
-      <div data-code="55_38" class="keyboard-button bg-danger"><small>&</small><br>7</div>
-      <div data-code="56_42" class="keyboard-button bg-warning"><small>*</small><br>8</div>
-      <div data-code="57_40" class="keyboard-button bg-info"><small>(</small><br>9</div>
-      <div data-code="48_41" class="keyboard-button bg-success"><small>)</small><br>0</div>
-      <div data-code="45_95" class="keyboard-button bg-success"><small>_</small><br>-</div>
-      <div data-code="61_43" class="keyboard-button bg-success"><small>+</small><br>=</div>
-      <div data-code="92_124" class="keyboard-button bg-success"><small>|</small><br>\</div>
+      <div data-code="126_96" class="keyboard-button">~<br>`</div>
+      <div data-code="49_33" class="keyboard-button bg-success">!<br>1</div>
+      <div data-code="50_64" class="keyboard-button bg-success">@<br>2</div>
+      <div data-code="51_35" class="keyboard-button bg-info">#<br>3</div>
+      <div data-code="52_36" class="keyboard-button bg-warning">$<br>4</div>
+      <div data-code="53_37" class="keyboard-button bg-primary">%<br>5</div>
+      <div data-code="54_64" class="keyboard-button bg-primary">^<br>6</div>
+      <div data-code="55_38" class="keyboard-button bg-danger">&<br>7</div>
+      <div data-code="56_42" class="keyboard-button bg-warning">*<br>8</div>
+      <div data-code="57_40" class="keyboard-button bg-info">(<br>9</div>
+      <div data-code="48_41" class="keyboard-button bg-success">)<br>0</div>
+      <div data-code="45_95" class="keyboard-button bg-success">_<br>-</div>
+      <div data-code="61_43" class="keyboard-button bg-success">+<br>=</div>
+      <div data-code="92_124" class="keyboard-button bg-success">|<br>\</div>
       <div class="keyboard-button">Back</div>
     </div>
     <div class="keyboard-row keyboard-row-2">
@@ -29,8 +29,8 @@
       <div data-code="105_73" class="keyboard-button bg-warning">I</div>
       <div data-code="111_79" class="keyboard-button bg-info">O</div>
       <div data-code="112_80" class="keyboard-button bg-success">P</div>
-      <div data-code="91_123" class="keyboard-button bg-success"><small>{</small><br>[</div>
-      <div data-code="93_125" class="keyboard-button bg-success"><small>}</small><br>]</div>
+      <div data-code="91_123" class="keyboard-button bg-success">{<br>[</div>
+      <div data-code="93_125" class="keyboard-button bg-success">}<br>]</div>
       <div class="keyboard-button"></div>
     </div>
     <div class="keyboard-row keyboard-row-3">
@@ -44,8 +44,8 @@
       <div data-code="106_74" class="keyboard-button bg-danger">J</div>
       <div data-code="107_75" class="keyboard-button bg-warning">K</div>
       <div data-code="108_76" class="keyboard-button bg-info">L</div>
-      <div data-code="59_58" class="keyboard-button bg-success"><small>:</small><br>;</div>
-      <div data-code="39_34" class="keyboard-button bg-success"><small>"</small><br>'</div>
+      <div data-code="59_58" class="keyboard-button bg-success">:<br>;</div>
+      <div data-code="39_34" class="keyboard-button bg-success">"<br>'</div>
       <div class="keyboard-button">Enter</div>
     </div>
     <div class="keyboard-row keyboard-row-4">
@@ -59,7 +59,7 @@
       <div data-code="109_77" class="keyboard-button bg-danger">M</div>
       <div data-code="44_60" class="keyboard-button bg-warning">,</div>
       <div data-code="46_62" class="keyboard-button bg-info">.</div>
-      <div data-code="47_63" class="keyboard-button bg-success"><small>?</small><br>/</div>
+      <div data-code="47_63" class="keyboard-button bg-success">?<br>/</div>
       <div ref="rightShift" class="keyboard-button">Shift</div>
     </div>
     <div class="keyboard-row keyboard-row-5">
@@ -68,18 +68,15 @@
       <div class="keyboard-button">Alt</div>
       <div data-code="32" class="keyboard-button">Space</div>
       <div class="keyboard-button">Alt</div>
-      <div class="keyboard-button d-flex align-items-center justify-content-center"><windows-icon /></div>
-      <div class="keyboard-button d-flex align-items-center justify-content-center"><context-menu-icon /></div>
+      <div class="keyboard-button d-flex align-items-center justify-content-center"></div>
+      <div class="keyboard-button d-flex align-items-center justify-content-center"></div>
       <div class="keyboard-button">Ctrl</div>
     </div>
   </div>
 </template>
 
 <script>
-import WindowsIcon from '../icons/WindowsIcon.vue';
-import ContextMenuIcon from '../icons/ContextMenuIcon.vue';
 export default {
-  components: {WindowsIcon, ContextMenuIcon},
   props: {
     splittedText: {
       type: Array,

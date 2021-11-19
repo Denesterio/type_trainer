@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import AppSpinner from '../UI/AppSpinner.vue';
+import AppSpinner from './AppSpinner.vue';
 import HistoryService from '../services/HistoryService.js';
 export default {
   props: {

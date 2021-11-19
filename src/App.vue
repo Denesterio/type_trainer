@@ -49,11 +49,11 @@
 </template>
 
 <script>
-import AppRadioInputs from "./UI/AppRadioInputs.vue";
+import AppRadioInputs from "./components/AppRadioInputs.vue";
 import TextBox from './components/TextBox.vue';
 import AppKeyboard from './components/AppKeyboard.vue';
-import AppSwitchInput from './UI/AppSwitchInput.vue';
-import api from './services/api.js';
+import AppSwitchInput from './components/AppSwitchInput.vue';
+import fetchText from './services/api.js';
 export default {
   name: 'App',
   components: {AppRadioInputs, TextBox, AppKeyboard, AppSwitchInput},
@@ -97,8 +97,7 @@ export default {
         type: 'meat-and-filler',
         sentences: parseInt(this.currentTextLength, 10),
       };
-      api
-        .get('text', params)
+      fetchText(params)
         .then((data) => {
           this.splittedText = data[0].split('');
           this.status = 'waiting';

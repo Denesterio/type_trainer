@@ -1,25 +1,16 @@
-import FetchClient from './FetchClient.js';
-
 // build routes
 const routes = {
   HOST: 'https://baconipsum.com',
   API_PREFIX: 'api',
-  text(id = '') {
-    return [this.HOST, this.API_PREFIX, id].join("/")
+  text() {
+    return [this.HOST, this.API_PREFIX].join("/")
   },
 };
 
-// use partial application; it's enough for simple task, I think
-const buildRequest = (client, type, path, params = {}) =>
-  client[type](path, params);
-
-const makeRequest = (type, path, params) =>
-  buildRequest(new FetchClient(), type, path, params);
-
-const makeUrl = (target, params = {}) => {
-  const path = params?.id ? routes[target](params.id) : routes[target]();
+const makeUrl = (params = {}) => {
+  const path = routes.text();
   const url = new URL(path);
-  const searchKeys = Object.keys(params).filter((key) => key !== 'id');
+  const searchKeys = Object.keys(params);
   if (searchKeys.length > 0) {
     for (const key of searchKeys) {
       url.searchParams.append(key, params[key]);
@@ -30,11 +21,19 @@ const makeUrl = (target, params = {}) => {
 }
 
 // functions for each method
-const get = (target, params) => {
-  const url = makeUrl(target, params);
-  return makeRequest("get", url);
+const fetchText = (params) => {
+  const url = makeUrl(params);
+  return new Promise((resolve) => {
+    if (url) {
+      resolve(['even office pork ion rest yoll papa stay directly']);
+    }
+  });
+// return fetch(url).then((response) => {
+//   if (response.ok) {
+//     return response.json();
+//   }
+//   throw new Error('Failed to fetch');
+// })
 };
 
-export default {
-  get,
-};
+export default fetchText;
