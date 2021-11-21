@@ -1,15 +1,7 @@
 <template>
   <div class="container bg-light shadow rounded h-100 p-4">
     <!-- change text length -->
-    <section class="shadow-box mb-3 p-2 text-center p-2 d-flex justify-content-center flex-direction-row">
-      <app-radio-inputs
-        v-model="currentTextLength"
-        :points="textLengthSettings"
-        name="text-size"
-      >
-        {{ $t('textLengthChange') }}:
-      </app-radio-inputs>
-    </section>
+    <settings-block-length v-model:currentTextLength="currentTextLength" />
     <!-- text container -->
     <text-box
       v-model:current-char-index="currentCharIndex"
@@ -48,14 +40,14 @@
 </template>
 
 <script>
-import AppRadioInputs from "./components/AppRadioInputs.vue";
+import SettingsBlockLength from './components/SettingsBlockLength.vue';
 import TextBox from './components/TextBox.vue';
 import AppKeyboard from './components/AppKeyboard.vue';
 import AppSwitchInput from './components/AppSwitchInput.vue';
 import fetchText from './services/api.js';
 export default {
   name: 'App',
-  components: {AppRadioInputs, TextBox, AppKeyboard, AppSwitchInput},
+  components: {TextBox, AppKeyboard, AppSwitchInput, SettingsBlockLength},
   /***
   * @return
   * {
@@ -71,11 +63,6 @@ export default {
   data() {
     return {
       status: 'loading',
-      textLengthSettings: [
-        { value: '3', label: this.$t('short') },
-        { value: '6', label: this.$t('middle') },
-        { value: '9', label: this.$t('long') },
-      ],
       currentTextLength: '6',
       splittedText: [],
       currentCharIndex: 0,

@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+HistoryService.js
+LocalStorageService.js
 
 
 # local env files
