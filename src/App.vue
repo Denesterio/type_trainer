@@ -40,9 +40,8 @@
       <app-keyboard
         v-if="showKeyboard"
         :splitted-text="splittedText"
-        :current-index="currentCharIndex"
+        :current-index="showKeyboardPrompt ? currentCharIndex : -1"
         :status="status"
-        :show-keyboard-prompt="showKeyboardPrompt"
       />
     </section>
   </div>
